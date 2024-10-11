@@ -1,0 +1,277 @@
+body {
+  height: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow-x: hidden;
+}
+
+/* Color de fondo de toda la página */
+
+html {
+
+  background-color: rgb(154, 140, 235);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Clase para el footer de la vista móvil */
+
+footer {
+  width: 70%;
+  color: white;
+  padding: 20pt !important;
+
+}
+
+/* Clase para el botón fijado en la vista móvil que guarda los tiempos */
+
+.fixed {
+
+  position: fixed !important;
+  right: 10px !important;
+  bottom: 10px !important;
+  text-align: center !important;
+  display: flex !important;
+  justify-content: center !important;
+  width: 18% !important;
+  height: 9% !important;
+}
+
+
+.rotate-cube  {
+  animation : cube 2s infinite !important;
+}
+
+main {
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.button-container {
+
+  display: flex;
+  justify-content: center;
+  gap: 20pt;
+
+}
+
+
+#buttonHistorial {
+
+  border-radius: 0;
+}
+
+.howto {
+  float: center;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+.resultados h2 {
+line-height: 2.7rem;}
+
+
+
+
+h2 {
+  padding: 20px !important;
+  color: white;
+  border: solid black 2px;
+  border-radius: 10px;
+  background: blue;
+  text-align: center ;
+  transition: all 0.5s ease;
+  width: fit-content;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  display: block !important; margin: auto !important;
+
+}
+
+h2:hover {
+  cursor: none;
+}
+
+@keyframes cube {
+  0% {
+    color: white;
+    transform: rotateX(0deg) rotateY(0deg);
+    background: red;
+  }
+  25% {
+    color: white;
+    transform: rotateX(180deg) rotateY(0deg);
+    background:yellow;
+  }
+  50% {
+    color: white;
+    transform: rotateX(180deg) rotateY(180deg);
+    background: green;
+  }
+  75% {
+    color: white;
+    transform: rotateX(0deg) rotateY(180deg);
+    background: orange;
+  }
+  100% {
+    color: white;
+    transform: rotateX(0deg) rotateY(0deg);
+    background: red;
+  }
+}
+
+ol {
+
+  font-size: 2em;
+ 
+}
+
+li {
+  margin: 25pt;
+}
+
+h2 {
+  margin: 10pt !important;
+}
+
+
+@media (min-width: 426px) {
+
+  .fixed {
+
+    position: fixed;
+    right: 10px !important;
+    bottom: 10px !important;
+    text-align: center !important;
+    display: flex !important;
+    justify-content: center !important;
+    width: 10% !important;
+    height: 10% !important;
+
+  }
+
+  .resultados {
+
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    }
+
+  
+}
+
+@media (min-width: 780px) {
+
+  .fixed {
+
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    width: 10%;
+    height: 12%;
+
+  }
+
+}
+
+
+
+
+@media (min-width: 1000px) {
+
+  .fixed {
+
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    width: 10%;
+    height: 13%;
+
+  }
+
+}
+
+@media (min-width: 1081px) {
+
+  
+
+  .fixed {
+
+    display: none !important;
+  }
+
+  .timer {
+
+    text-align: center;
+    background-color: white;
+    border: solid 1px black;
+    padding: 140pt;
+    width: 500pt;
+    border-radius: 5pt;
+    font-size: 10em;
+  }
+}
+
+@media (max-width: 1080px) {
+
+h2 {
+
+  text-align: center;
+}
+
+  .timer {
+
+    text-align: center;
+      background-color: white;
+      border: solid 1px black;
+      display: block;
+      padding-top: 200pt;
+      padding-bottom: 200pt;
+      width: 90%;
+      border-radius: 5pt;
+      font-size: 10em;
+  }
+
+
+}
+
+@media (max-width: 426px) {
+
+  .timer {
+font-size: 60px;
+    max-width: 70% !important;
+  }
+}
+  @media (max-width: 535px) {
+    
+
+
+  .resultados {
+    display: flex;
+    flex-direction: column-reverse;
+
+  }
+
+/* Sería aconsejable usar aquí CSS Nesting, pero no lo incluímos por la falta de compatibilidad con navegadores de smartphone */
+
+  .resultados h2 {
+      display: block;
+      font-size:35px;
+   
+  }
+
+
+  }
+  

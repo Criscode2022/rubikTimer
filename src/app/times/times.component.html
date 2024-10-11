@@ -1,0 +1,75 @@
+<div id="botones">
+  <button
+    id="borrar"
+    mat-raised-button
+    color="primary"
+    type="button"
+    (click)="clearLocalStorage()"
+  >
+    Borrar datos gardados
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    type="button"
+    (click)="downloadTodo()"
+  >
+    Descargar todos os resultados
+  </button>
+</div>
+<div id="tabs">
+  <mat-tab-group dynamicHeight>
+    <mat-tab label="2x2">
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="downloadResultados2()"
+      >
+        Descargar resultados 2x2
+      </button>
+      <h2>Media de resultados: {{ media2 }}</h2>
+
+      <ol>
+        <li *ngFor="let cubo of resultados2">
+          {{ cubo.tempo }} ({{ parseAndFormatDate(cubo.data) }})
+        </li>
+      </ol>
+    </mat-tab>
+
+    <mat-tab label="3x3">
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="downloadResultados3()"
+      >
+        Descargar resultados 3x3
+      </button>
+      <h2>Media de resultados: {{ media3 }}</h2>
+
+      <ol>
+        <li *ngFor="let cubo of resultados3">
+          {{ cubo.tempo }} ({{ parseAndFormatDate(cubo.data) }})
+        </li>
+      </ol>
+    </mat-tab>
+    <mat-tab label="4x4">
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="downloadResultados4()"
+      >
+        Descargar resultados 4x4
+      </button>
+      <h2>Media de resultados: {{ media4 }}</h2>
+
+      <ol>
+        <li *ngFor="let cubo of resultados4">
+          {{ cubo.tempo }} ({{ parseAndFormatDate(cubo.data) }})
+        </li>
+      </ol>
+    </mat-tab>
+  </mat-tab-group>
+</div>

@@ -1,0 +1,25 @@
+div {
+  margin: 40pt;
+}
+
+.cube-2 {
+  background: blue;
+}
+
+.cube-4 {
+  background: orange;
+}
+
+h2 {
+  background-color: green;
+  font-size: 3rem;
+  margin: 40px 0 40px 0 !important;
+}
+
+@media (max-width: 425px) {
+  h2 {
+    position: relative;
+    top: 15pt;
+    margin: 20px 0 40px 0 !important;
+  }
+}

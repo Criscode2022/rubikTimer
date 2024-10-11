@@ -1,0 +1,41 @@
+<main>
+  <h2
+    [ngClass]="{
+      'rotate-cube': timerActive,
+      'cube-2': cube === 2,
+      'cube-3': cube === 3,
+      'cube-4': cube === 4
+    }"
+  >
+    {{ cube }}x{{ cube }}
+  </h2>
+
+  <p class="timer" (click)="timerActive ? stopTimer() : startTimer()">
+    {{ tiempo }}
+  </p>
+
+  <div class="howto">
+    <p>Iniciar/Parar tempo: Espazo/Click</p>
+    <p>Rexistrar tempo: Enter/Botón</p>
+  </div>
+</main>
+
+<div class="resultados">
+  <h2>Tempos desta sesión:</h2>
+  <h2 class>Media desta sesión: {{ avg }}"</h2>
+</div>
+<div>
+  <ol>
+    <li *ngFor="let time of times">{{ time }}"</li>
+  </ol>
+
+  <button
+    class="fixed"
+    (click)="saveTime()"
+    mat-fab
+    color="primary"
+    aria-label="save button"
+  >
+    <mat-icon>save</mat-icon>
+  </button>
+</div>
