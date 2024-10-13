@@ -4,7 +4,7 @@ import algoritmos from "src/app/shared/data/algoritmos.json";
 @Injectable({
   providedIn: "root",
 })
-export class AlgoritmosService {
+export class AlgorithmService {
   public random = 0;
 
   public algorithms = algoritmos;

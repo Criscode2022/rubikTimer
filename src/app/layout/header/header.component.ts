@@ -2,28 +2,25 @@ import {
   Component,
   ElementRef,
   HostListener,
-  OnInit,
+  inject,
   ViewChild,
 } from "@angular/core";
 import { MatSidenav } from "@angular/material/sidenav";
-import { AlgoritmosService } from "../../core/services/algorithm-services/algoritmos.service";
+import { AlgorithmService } from "src/app/core/services/algorithm-service/algorithm.service";
 
 @Component({
   selector: "app-header",
   templateUrl: "./header.component.html",
   styleUrls: ["./header.component.css"],
 })
-export class HeaderComponent implements OnInit {
-  showFiller = false;
-  musica: boolean = false;
+export class HeaderComponent {
+  private _eref = inject(ElementRef);
+  protected algorithmService = inject(AlgorithmService);
 
-  closeDrawer() {
-    this.drawer.close();
-  }
+  protected musica = false;
 
   @ViewChild("drawer", { static: true }) drawer!: MatSidenav;
 
-  //Método para cerrar el drawer haciendo click en cualquier parte de la pantalla
   @HostListener("document:click", ["$event"])
   public onClick(event: any): void {
     if (!this._eref.nativeElement.contains(event.target)) {
@@ -32,20 +29,13 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  constructor(
-    private _eref: ElementRef,
-    public algoritmosService: AlgoritmosService
-  ) {}
-
-  ngOnInit() {}
-
   @ViewChild("myAudio") myAudio!: ElementRef;
 
-  generarAleatorio() {
-    this.algoritmosService.generateRandom();
+  protected closeDrawer() {
+    this.drawer.close();
   }
 
-  cambiarMusica() {
+  protected toggleMusic() {
     const audioElement = this.myAudio.nativeElement;
     if (this.musica) {
       audioElement.play();

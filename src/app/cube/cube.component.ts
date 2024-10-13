@@ -1,6 +1,6 @@
 import { Component, HostListener, inject, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AlgoritmosService } from "../core/services/algorithm-services/algoritmos.service";
+import { AlgorithmService } from "../core/services/algorithm-service/algorithm.service";
 
 @Component({
   selector: "app-cube",
@@ -10,7 +10,7 @@ import { AlgoritmosService } from "../core/services/algorithm-services/algoritmo
 export class CubeComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private algorithmService = inject(AlgoritmosService);
+  private algorithmService = inject(AlgorithmService);
 
   protected cube = 0;
 
