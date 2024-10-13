@@ -33,59 +33,47 @@
 
   <mat-drawer-content>
     <mat-toolbar color="primary">
-      <mat-toolbar-row class="btn">
-        <span class="cursor-pointer hover:text-yellow-500" routerLink="times"
-          ><mat-icon>history</mat-icon></span
+      <mat-toolbar-row class="flex justify-between items-center">
+        <span class="cursor-pointer hover:text-yellow-500" routerLink="times">
+          <mat-icon>history</mat-icon>
+        </span>
+        <mat-slide-toggle
+          [(ngModel)]="musica"
+          (ngModelChange)="toggleMusic()"
+          class="!mb-4 md:!mb-0 !ml-14"
         >
-        <mat-slide-toggle [(ngModel)]="musica" (ngModelChange)="toggleMusic()"
-          ><mat-icon>music_note</mat-icon></mat-slide-toggle
-        ><audio
+          <mat-icon>music_note</mat-icon>
+        </mat-slide-toggle>
+        <audio
           #myAudio
           src="https://github.com/Criscode2022/contadorRubik/blob/main/assets/You%20%E2%80%94%20myuu%20(128%20kbps).mp3?raw=true"
           [autoplay]="musica"
         ></audio>
         <button
-          class="md:!hidden !mr-2"
-          mat-icon-button
+          class="md:hidden mr-2 p-0 w-auto h-auto flex items-center justify-center"
           (click)="drawer.toggle()"
         >
-          <mat-icon>menu</mat-icon>
+          <mat-icon class="w-6 h-6">menu</mat-icon>
         </button>
       </mat-toolbar-row>
-      <mat-toolbar-row class="title-container">
+
+      <mat-toolbar-row class="flex justify-center">
         <h1
           (click)="this.algorithmService.generateRandom()"
-          class="text-center !text-4xl md:!text-6xl hover:text-orange-500 cursor-pointer !font-bold"
+          class="!text-4xl md:!text-7xl hover:text-orange-500 cursor-pointer !font-bold !pb-12 md:!pb-0"
         >
           GaliRubik
         </h1>
       </mat-toolbar-row>
-      <mat-toolbar-row class="justify-center !hidden md:!flex gap-24">
-        <button
-          routerLink="2"
-          routerLinkActive="active"
-          mat-button
-          color="accent"
-        >
-          2x2
-        </button>
-        <button
-          mat-button
-          routerLink="3"
-          routerLinkActive="active"
-          color="accent"
-        >
-          3x3
-        </button>
-        <button
-          mat-button
-          routerLink="4"
-          routerLinkActive="active"
-          color="accent"
-        >
-          4x4
-        </button>
+
+      <mat-toolbar-row
+        class="justify-center !hidden md:!flex gap-24 cube-buttons"
+      >
+        <button mat-button routerLink="2" routerLinkActive="active">2x2</button>
+        <button mat-button routerLink="3" routerLinkActive="active">3x3</button>
+        <button mat-button routerLink="4" routerLinkActive="active">4x4</button>
       </mat-toolbar-row>
+
       <mat-toolbar-row
         class="flex justify-center items-center text-xs md:text-base m-0 relative"
       >

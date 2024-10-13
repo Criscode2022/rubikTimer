@@ -21,9 +21,12 @@
 </main>
 
 <div class="resultados">
-  <h2>Tempos desta sesión:</h2>
-  <h2 class>Media desta sesión: {{ avg }}"</h2>
+  <p class="text-xl"><strong>Tempos desta sesión:</strong></p>
+  <p class="text-xl">
+    <strong>Media desta sesión: {{ avg ? avg + '"' : "" }}</strong>
+  </p>
 </div>
+
 <div>
   <ol>
     <li *ngFor="let time of times">{{ time }}"</li>
