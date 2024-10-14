@@ -119,6 +119,7 @@ ol {
 
 li {
   margin: 25pt;
+  list-style: decimal;
 }
 
 h2 {

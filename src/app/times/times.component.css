@@ -1,78 +1,50 @@
 * {
-
   box-sizing: border-box;
   margin: 10pt;
   padding: 10pt;
   max-width: 100%;
-
-}
-
-
-ol, li {
-
-  margin: 10pt;
-  padding: 10pt;
-  list-style: decimal;
-  line-height: 2rem;
 }
 
 #botones {
-
   display: flex;
   justify-content: space-between;
 }
 
-
-
 @media (max-width: 1130px) {
-
   h2 {
-
     font-size: 20px;
   }
 
   ol {
-
     font-size: 1.5em;
   }
 
-
   #tabs {
-
     position: static;
     top: 40px;
     left: 80px;
   }
 
   li {
-
     margin: 10pt !important;
   }
 
   * {
-
     line-height: 25pt !important;
   }
 
- #botones button {
-
+  #botones button {
     padding-top: 25pt;
     padding-bottom: 25pt;
-
   }
 
   @media (max-width: 380px) {
-
-    button {padding: 40px;}
-
-    #botones button {
-
-      padding: 60px;
+    button {
+      padding: 40px;
     }
 
-
+    #botones button {
+      padding: 60px;
+    }
   }
-
-
-
 }

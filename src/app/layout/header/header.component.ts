@@ -3,9 +3,12 @@ import {
   ElementRef,
   HostListener,
   inject,
+  OnInit,
   ViewChild,
 } from "@angular/core";
 import { MatSidenav } from "@angular/material/sidenav";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
+import { filter } from "rxjs";
 import { AlgorithmService } from "src/app/core/services/algorithm-service/algorithm.service";
 
 @Component({
@@ -13,11 +16,39 @@ import { AlgorithmService } from "src/app/core/services/algorithm-service/algori
   templateUrl: "./header.component.html",
   styleUrls: ["./header.component.css"],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   private _eref = inject(ElementRef);
   protected algorithmService = inject(AlgorithmService);
 
   protected musica = false;
+  protected hide = false;
+
+  ngOnInit(): void {
+    const initialUrl = this.router.url;
+
+    if (initialUrl === "/times") {
+      this.hide = true;
+    }
+
+    this.router.events
+      .pipe(
+        filter(
+          (event): event is NavigationEnd => event instanceof NavigationEnd
+        )
+      )
+      .subscribe((event: NavigationEnd) => {
+        const currentUrl = event.urlAfterRedirects;
+
+        if (currentUrl === "/times") {
+          this.hide = true;
+        } else {
+          this.hide = false;
+        }
+      });
+  }
 
   @ViewChild("drawer", { static: true }) drawer!: MatSidenav;
 
@@ -42,5 +73,13 @@ export class HeaderComponent {
     } else {
       audioElement.pause();
     }
+  }
+
+  protected navigate(hide: boolean) {
+    if (!hide) {
+      return;
+    }
+
+    this.router.navigate(["/"]);
   }
 }
