@@ -11,8 +11,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Color de fondo de toda la página */
-
 html {
   background-color: rgb(154, 140, 235);
 }
@@ -21,15 +19,11 @@ html {
   box-sizing: border-box;
 }
 
-/* Clase para el footer de la vista móvil */
-
 footer {
   width: 70%;
   color: white;
   padding: 20pt !important;
 }
-
-/* Clase para el botón fijado en la vista móvil que guarda los tiempos */
 
 .fixed {
   position: fixed !important;
@@ -44,23 +38,6 @@ footer {
 
 .rotate-cube {
   animation: cube 2s infinite !important;
-}
-
-main {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-
-#buttonHistorial {
-  border-radius: 0;
-}
-
-.howto {
-  float: center;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.5em;
 }
 
 .resultados h2 {
@@ -79,10 +56,6 @@ h2 {
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   display: block !important;
   margin: auto !important;
-}
-
-h2:hover {
-  cursor: none;
 }
 
 @keyframes cube {
@@ -211,16 +184,15 @@ h2 {
     max-width: 70% !important;
   }
 }
-@media (max-width: 535px) {
-  .resultados {
-    display: flex;
-    flex-direction: column-reverse;
-  }
 
-  /* Sería aconsejable usar aquí CSS Nesting, pero no lo incluímos por la falta de compatibilidad con navegadores de smartphone */
+.mat-mdc-tab-body-content {
+  padding: 20px;
+  margin: 20px;
+}
 
-  .resultados h2 {
-    display: block;
-    font-size: 35px;
-  }
+.no-select {
+  user-select: none; /* Standard syntax */
+  -webkit-user-select: none; /* Chrome, Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* /Edge */
 }

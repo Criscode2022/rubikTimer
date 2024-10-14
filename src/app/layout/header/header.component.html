@@ -34,9 +34,12 @@
   <mat-drawer-content>
     <mat-toolbar color="primary">
       <mat-toolbar-row class="flex justify-start md:justify-between gap-4">
-        <span class="cursor-pointer hover:text-yellow-500" routerLink="times">
-          <mat-icon>history</mat-icon>
-        </span>
+        <mat-icon
+          [class.invisible]="hide"
+          class="cursor-pointer hover:text-yellow-500"
+          routerLink="times"
+          >history</mat-icon
+        >
         <mat-slide-toggle [(ngModel)]="musica" (ngModelChange)="toggleMusic()">
           <mat-icon>music_note</mat-icon>
         </mat-slide-toggle>
@@ -58,13 +61,14 @@
       <mat-toolbar-row class="flex justify-center">
         <h1
           (click)="this.algorithmService.generateRandom(); navigate(hide)"
-          class="!text-4xl md:!text-7xl hover:text-orange-500 cursor-pointer !font-bold"
+          class="!text-4xl md:!text-7xl hover:text-orange-500 cursor-pointer !font-bold no-select"
         >
           GaliRubik
         </h1>
       </mat-toolbar-row>
 
       <mat-toolbar-row
+        *ngIf="!hide"
         class="justify-center !hidden md:!flex gap-24 cube-buttons"
       >
         <button mat-button routerLink="2" routerLinkActive="active">2x2</button>

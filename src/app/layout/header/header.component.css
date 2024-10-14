@@ -28,6 +28,10 @@ button {
 
 .cube-buttons button {
   padding: 20px 120px 20px 120px !important;
+
+  &:hover {
+    background-color: red;
+  }
 }
 
 button.active {

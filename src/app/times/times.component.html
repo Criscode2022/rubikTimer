@@ -1,34 +1,27 @@
-<div id="botones">
-  <button
-    id="borrar"
-    mat-raised-button
-    color="primary"
-    type="button"
-    (click)="clearLocalStorage()"
-  >
-    Borrar datos gardados
+<div class="flex justify-between p-4">
+  <button mat-raised-button color="primary" (click)="downloadTodo()">
+    Descargar todos os tempos
   </button>
-  <button
-    mat-raised-button
-    color="primary"
-    type="button"
-    (click)="downloadTodo()"
-  >
-    Descargar todos os resultados
+
+  <button mat-fab (click)="clearLocalStorage()" color="warn">
+    <mat-icon>delete</mat-icon>
   </button>
 </div>
-<div id="tabs">
+
+<div>
   <mat-tab-group dynamicHeight>
-    <mat-tab label="2x2">
-      <button
-        mat-raised-button
-        color="primary"
-        type="button"
-        (click)="downloadResultados2()"
-      >
-        Descargar resultados 2x2
-      </button>
-      <h2>Media de resultados: {{ media2 }}</h2>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span class="!text-xl">2x2</span>
+      </ng-template>
+
+      <div class="flex justify-between">
+        <button mat-fab (click)="downloadResultados2()">
+          <mat-icon>download</mat-icon>
+        </button>
+
+        <h2>Media de resultados: {{ media2 }}</h2>
+      </div>
 
       <ol>
         <li *ngFor="let cubo of resultados2">
@@ -37,16 +30,17 @@
       </ol>
     </mat-tab>
 
-    <mat-tab label="3x3">
-      <button
-        mat-raised-button
-        color="primary"
-        type="button"
-        (click)="downloadResultados3()"
-      >
-        Descargar resultados 3x3
-      </button>
-      <h2>Media de resultados: {{ media3 }}</h2>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span class="!text-xl">3x3</span>
+      </ng-template>
+      <div class="flex justify-between">
+        <button mat-fab (click)="downloadResultados3()">
+          <mat-icon>download</mat-icon>
+        </button>
+
+        <h2>Media de resultados: {{ media3 }}</h2>
+      </div>
 
       <ol>
         <li *ngFor="let cubo of resultados3">
@@ -54,16 +48,17 @@
         </li>
       </ol>
     </mat-tab>
-    <mat-tab label="4x4">
-      <button
-        mat-raised-button
-        color="primary"
-        type="button"
-        (click)="downloadResultados4()"
-      >
-        Descargar resultados 4x4
-      </button>
-      <h2>Media de resultados: {{ media4 }}</h2>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span class="!text-xl">4x4</span>
+      </ng-template>
+      <div class="flex justify-between">
+        <button mat-fab (click)="downloadResultados4()">
+          <mat-icon>download</mat-icon>
+        </button>
+
+        <h2>Media de resultados: {{ media4 }}</h2>
+      </div>
 
       <ol>
         <li *ngFor="let cubo of resultados4">

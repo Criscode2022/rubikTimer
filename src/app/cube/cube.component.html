@@ -1,4 +1,4 @@
-<main>
+<main class="flex flex-col items-center">
   <h2
     [ngClass]="{
       'rotate-cube': timerActive,
@@ -11,10 +11,10 @@
   </h2>
 
   <p class="timer" (click)="timerActive ? stopTimer() : startTimer()">
-    {{ tiempo }}
+    {{ tiempo.toFixed(1) }}
   </p>
 
-  <div class="howto">
+  <div class="font-bold text-center text-xl">
     <p>Iniciar/Parar tempo: Espazo/Click</p>
     <p>Rexistrar tempo: Enter/Botón</p>
   </div>

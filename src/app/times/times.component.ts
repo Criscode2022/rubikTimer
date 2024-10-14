@@ -106,7 +106,7 @@ export class TimesComponent implements OnInit {
 
   protected clearLocalStorage() {
     const confirmDelete = window.confirm(
-      "Estás seguro/a de que queres eliminar todos os tempos gardados? Esta acción non pode ser revertida"
+      "Seguro que queres eliminar todos os tempos gardados? Esta acción non pode ser revertida"
     );
 
     if (confirmDelete) {
