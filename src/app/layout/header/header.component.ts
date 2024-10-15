@@ -1,13 +1,12 @@
 import {
   Component,
   ElementRef,
-  HostListener,
   inject,
   OnInit,
   ViewChild,
 } from "@angular/core";
 import { MatSidenav } from "@angular/material/sidenav";
-import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
+import { NavigationEnd, Router } from "@angular/router";
 import { filter } from "rxjs";
 import { AlgorithmService } from "src/app/core/services/algorithm-service/algorithm.service";
 
@@ -17,10 +16,8 @@ import { AlgorithmService } from "src/app/core/services/algorithm-service/algori
   styleUrls: ["./header.component.css"],
 })
 export class HeaderComponent implements OnInit {
-  private route = inject(ActivatedRoute);
   private router = inject(Router);
 
-  private _eref = inject(ElementRef);
   protected algorithmService = inject(AlgorithmService);
 
   protected musica = false;
@@ -51,14 +48,6 @@ export class HeaderComponent implements OnInit {
   }
 
   @ViewChild("drawer", { static: true }) drawer!: MatSidenav;
-
-  @HostListener("document:click", ["$event"])
-  public onClick(event: any): void {
-    if (!this._eref.nativeElement.contains(event.target)) {
-      this.drawer.close();
-      event.preventDefault();
-    }
-  }
 
   @ViewChild("myAudio") myAudio!: ElementRef;
 

@@ -3,9 +3,7 @@
   top: 0;
   width: 40vh;
   background-color: rgb(154, 140, 235);
-  margin: auto;
   text-align: center;
-  z-index: 999999;
 }
 
 .example-sidenav.mat-drawer button {
