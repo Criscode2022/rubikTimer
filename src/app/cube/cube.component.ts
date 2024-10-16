@@ -20,7 +20,7 @@ export class CubeComponent implements OnInit {
   private timerId: any;
   protected timerActive = false;
 
-  protected times: any[] = [];
+  protected times = [] as number[];
   protected avg = "";
 
   ngOnInit(): void {
@@ -95,10 +95,10 @@ export class CubeComponent implements OnInit {
     clearInterval(this.timerId);
   }
 
-  private average(array: Object[]) {
+  private average(array: number[]) {
     let sum = 0;
 
-    array.forEach((element: any) => {
+    array.forEach((element: number) => {
       sum += element;
     });
 

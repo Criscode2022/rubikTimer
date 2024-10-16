@@ -1,0 +1,13 @@
+<div class="flex justify-between">
+  <button mat-fab (click)="downloadResults()">
+    <mat-icon>download</mat-icon>
+  </button>
+
+  <h2>Media de resultados: {{ cubeResults.avg }}</h2>
+</div>
+
+<ol>
+  <li *ngFor="let cube of cubeResults.results">
+    {{ cube.tempo }} ({{ parseAndFormatDate(cube.data) }})
+  </li>
+</ol>

@@ -19,23 +19,33 @@
 
   <div class="font-bold text-center text-xl">
     <p>Iniciar/Parar tempo: Espazo/Click</p>
-    <p>Rexistrar tempo: Enter/Botón</p>
+    <p>Rexistrar tempo: Enter<span class="md:hidden">/Botón</span></p>
   </div>
 </main>
 
-<div class="flex flex-col-reverse md:flex-row justify-between">
-  <p class="text-xl"><strong>Tempos desta sesión:</strong></p>
+<div
+  class="flex flex-col-reverse md:flex-row justify-between mx-6 mt-8 md:mt-4"
+>
+  <div>
+    <p class="text-xl"><strong>Tempos desta sesión:</strong></p>
+    <ol class="ml-6 md:ml-10">
+      <li *ngFor="let time of times" class="text-xl md:text-4xl my-4">
+        {{ time }}"
+      </li>
+    </ol>
+  </div>
+
   <p class="text-xl">
     <strong>Media desta sesión: {{ avg ? avg + '"' : "" }}</strong>
   </p>
 </div>
 
-<div>
-  <ol>
-    <li *ngFor="let time of times">{{ time }}"</li>
-  </ol>
-
-  <button (click)="saveTime()" mat-fab color="primary" aria-label="save button">
-    <mat-icon>save</mat-icon>
-  </button>
-</div>
+<button
+  (click)="saveTime()"
+  class="!fixed bottom-2 right-2 md:!hidden"
+  mat-fab
+  color="primary"
+  aria-label="save button"
+>
+  <mat-icon>save</mat-icon>
+</button>

@@ -16,9 +16,10 @@ import { AppComponent } from "./app.component";
 import { CubeComponent } from "./cube/cube.component";
 import { HeaderComponent } from "./layout/header/header.component";
 import { TimesComponent } from "./times/times.component";
+import { TabResultsComponent } from './times/components/tab-results/tab-results.component';
 
 @NgModule({
-  declarations: [AppComponent, CubeComponent, HeaderComponent, TimesComponent],
+  declarations: [AppComponent, CubeComponent, HeaderComponent, TimesComponent, TabResultsComponent],
   imports: [
     AppRoutingModule,
     BrowserAnimationsModule,

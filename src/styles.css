@@ -53,12 +53,7 @@ h2 {
   }
 }
 
-ol {
-  font-size: 2em;
-}
-
-li {
-  margin: 25pt;
+ol li {
   list-style: decimal;
 }
 
