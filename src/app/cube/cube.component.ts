@@ -26,8 +26,15 @@ export class CubeComponent implements OnInit {
   ngOnInit(): void {
     this.params.subscribe((params) => {
       this.type = Number(params["cube"]);
-      this.times = [];
-      this.avg = "0";
+
+      if (sessionStorage.getItem(this.type.toString())) {
+        const storedTimes = sessionStorage.getItem(this.type.toString());
+        this.times = storedTimes ? JSON.parse(storedTimes) : [];
+        this.avg = this.calculateAverage(this.times);
+      } else {
+        this.times = [];
+        this.avg = "0";
+      }
 
       this.algorithmService.generateRandom();
 
@@ -93,6 +100,8 @@ export class CubeComponent implements OnInit {
     localStorage.setItem(localId, JSON.stringify(time));
 
     this.times.push(this.time);
+
+    sessionStorage.setItem(this.type.toString(), JSON.stringify(this.times));
 
     this.avg = this.calculateAverage(this.times);
 

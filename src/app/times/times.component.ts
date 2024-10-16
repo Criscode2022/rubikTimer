@@ -86,6 +86,7 @@ export class TimesComponent implements OnInit {
     }
 
     localStorage.clear();
+    sessionStorage.clear();
 
     let snackBarRef = this.openSnackBar("Datos eliminados correctamente", "OK");
     snackBarRef.afterDismissed().subscribe(() => {
