@@ -3,7 +3,8 @@ import { MatSnackBar, MatSnackBarRef } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
-import { Results, Time } from "../core/services/algorithm-service/types/cube";
+import { Results } from "../core/types/results";
+import { Time } from "../core/types/time";
 
 @Component({
   selector: "app-times",
@@ -12,7 +13,7 @@ import { Results, Time } from "../core/services/algorithm-service/types/cube";
 })
 export class TimesComponent implements OnInit {
   private router = inject(Router);
-  private _snackBar = inject(MatSnackBar);
+  private snackBar = inject(MatSnackBar);
 
   private localData = [] as Time[];
   private keys = [] as string[];
@@ -27,42 +28,50 @@ export class TimesComponent implements OnInit {
     );
 
     this.cube2Results = {
-      avg: this.avg(this.localData.filter((cube) => cube.cubo === 2)),
-      cubeType: 2,
+      avg: this.calculateAverage(
+        this.localData.filter((cube) => cube.cubo === 2)
+      ),
+      type: 2,
       times: this.localData.filter((cube) => cube.cubo === 2),
     };
 
     this.cube3Results = {
-      avg: this.avg(this.localData.filter((cube) => cube.cubo === 3)),
-      cubeType: 3,
+      avg: this.calculateAverage(
+        this.localData.filter((cube) => cube.cubo === 3)
+      ),
+      type: 3,
       times: this.localData.filter((cube) => cube.cubo === 3),
     };
 
     this.cube4Results = {
-      avg: this.avg(this.localData.filter((cube) => cube.cubo === 4)),
-      cubeType: 4,
+      avg: this.calculateAverage(
+        this.localData.filter((cube) => cube.cubo === 4)
+      ),
+      type: 4,
       times: this.localData.filter((cube) => cube.cubo === 4),
     };
   }
 
-  protected avg(results: Time[]) {
+  protected calculateAverage(results: Time[]) {
     const sum: number = results.reduce(
       (acc: number, element: Time) => acc + element.tempo,
       0
     );
 
-    const average = sum / results.length;
-    return Number(average.toFixed(2));
+    const avg = sum / results.length;
+    return Number(avg.toFixed(2));
   }
 
   protected downloadAll() {
     const worksheet = XLSX.utils.json_to_sheet(this.localData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Todo");
+
     const excelBuffer = XLSX.write(workbook, {
       bookType: "xlsx",
       type: "array",
     });
+
     const blob = new Blob([excelBuffer], { type: "application/xlsx" });
     saveAs(blob, "resultadosTodo.xlsx");
   }
@@ -72,20 +81,23 @@ export class TimesComponent implements OnInit {
       "Seguro que queres eliminar todos os tempos gardados? Esta acción non pode ser revertida"
     );
 
-    if (confirmDelete) {
-      localStorage.clear();
-      let snackBarRef = this.openSnackBar(
-        "Datos eliminados correctamente",
-        "OK"
-      );
-
-      snackBarRef.afterDismissed().subscribe(() => {
-        this.router.navigate(["/"]);
-      });
+    if (!confirmDelete) {
+      return;
     }
+
+    localStorage.clear();
+
+    let snackBarRef = this.openSnackBar("Datos eliminados correctamente", "OK");
+    snackBarRef.afterDismissed().subscribe(() => {
+      this.router.navigate(["/"]);
+    });
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   }
 
   private openSnackBar(message: string, action: string): MatSnackBarRef<any> {
-    return this._snackBar.open(message, action, { duration: 5000 });
+    return this.snackBar.open(message, action, { duration: 5000 });
   }
 }

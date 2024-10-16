@@ -2,12 +2,12 @@
   <h2
     [ngClass]="{
       'rotate-cube': timerActive,
-      'cube-2': cubeType === 2,
-      'cube-3': cubeType === 3,
-      'cube-4': cubeType === 4
+      'cube-2': type === 2,
+      'cube-3': type === 3,
+      'cube-4': type === 4
     }"
   >
-    {{ cubeType }}x{{ cubeType }}
+    {{ type }}x{{ type }}
   </h2>
 
   <p
@@ -17,7 +17,7 @@
     {{ time.toFixed(1) }}
   </p>
 
-  <div class="font-bold text-center text-xl">
+  <div class="font-bold text-center md:text-xl">
     <p>Iniciar/Parar tempo: Espazo/Click</p>
     <p>Rexistrar tempo: Enter<span class="md:hidden">/Botón</span></p>
   </div>
@@ -26,8 +26,8 @@
 <div
   class="flex flex-col-reverse md:flex-row justify-between mx-6 mt-8 md:mt-4"
 >
-  <div>
-    <p class="text-xl"><strong>Tempos desta sesión:</strong></p>
+  <div *ngIf="times.length">
+    <p class="md:text-xl"><strong>Tempos desta sesión:</strong></p>
     <ol class="ml-6 md:ml-10">
       <li *ngFor="let time of times" class="text-xl md:text-4xl my-4">
         {{ time }}"
@@ -35,8 +35,8 @@
     </ol>
   </div>
 
-  <p class="text-xl">
-    <strong>Media desta sesión: {{ avg ? avg + '"' : "" }}</strong>
+  <p class="md:text-xl">
+    <strong>Media desta sesión: {{ avg + '"' }}</strong>
   </p>
 </div>
 

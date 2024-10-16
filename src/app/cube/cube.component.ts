@@ -12,7 +12,7 @@ export class CubeComponent implements OnInit {
   private router = inject(Router);
   private algorithmService = inject(AlgorithmService);
 
-  protected cubeType = 0;
+  protected type = 0;
 
   private params = this.route.params;
 
@@ -21,18 +21,20 @@ export class CubeComponent implements OnInit {
   protected timerActive = false;
 
   protected times = [] as number[];
-  protected avg = "";
+  protected avg = "0";
 
   ngOnInit(): void {
     this.params.subscribe((params) => {
-      this.cubeType = Number(params["cube"]);
+      this.type = Number(params["cube"]);
+      this.times = [];
+      this.avg = "0";
 
       this.algorithmService.generateRandom();
 
       this.stopTimer();
       this.time = 0;
 
-      if (![2, 3, 4].includes(this.cubeType)) {
+      if (![2, 3, 4].includes(this.type)) {
         this.router.navigate(["/3"]);
       }
     });
@@ -66,6 +68,11 @@ export class CubeComponent implements OnInit {
     }, 10);
   }
 
+  protected stopTimer() {
+    this.timerActive = false;
+    clearInterval(this.interval);
+  }
+
   protected saveTime() {
     if (!this.time) {
       return;
@@ -73,26 +80,24 @@ export class CubeComponent implements OnInit {
 
     const date = new Date();
 
-    const data = {
-      cubo: this.cubeType,
+    const time = {
+      cubo: this.type,
       tempo: this.time,
       data: date,
     };
 
-    const id = new Date().getTime().toString();
+    // The property name "data" may seem like a typo, but it means "date" in Galician.
 
-    localStorage.setItem(id, JSON.stringify(data));
+    const localId = date.getTime().toString();
+
+    localStorage.setItem(localId, JSON.stringify(time));
 
     this.times.push(this.time);
+
     this.avg = this.calculateAverage(this.times);
 
     this.stopTimer();
     this.time = 0;
-  }
-
-  protected stopTimer() {
-    this.timerActive = false;
-    clearInterval(this.interval);
   }
 
   private calculateAverage(times: number[]) {

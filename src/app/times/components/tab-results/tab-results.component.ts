@@ -2,7 +2,7 @@ import { Component, Input } from "@angular/core";
 import { format } from "date-fns";
 import { gl } from "date-fns/locale";
 import saveAs from "file-saver";
-import { Results } from "src/app/core/services/algorithm-service/types/cube";
+import { Results } from "src/app/core/types/results";
 import * as XLSX from "xlsx";
 
 @Component({
@@ -19,7 +19,7 @@ export class TabResultsComponent {
     XLSX.utils.book_append_sheet(
       workbook,
       worksheet,
-      `${this.results.cubeType}x${this.results.cubeType}`
+      `${this.results.type}x${this.results.type}`
     );
 
     const excelBuffer = XLSX.write(workbook, {
@@ -28,10 +28,7 @@ export class TabResultsComponent {
     });
 
     const blob = new Blob([excelBuffer], { type: "application/xlsx" });
-    saveAs(
-      blob,
-      `resultados-${this.results.cubeType}x${this.results.cubeType}.xlsx`
-    );
+    saveAs(blob, `resultados-${this.results.type}x${this.results.type}.xlsx`);
   }
 
   protected parseAndFormatDate(dateString: string): string {
