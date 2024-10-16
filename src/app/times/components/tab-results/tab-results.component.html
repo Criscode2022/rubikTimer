@@ -3,11 +3,11 @@
     <mat-icon>download</mat-icon>
   </button>
 
-  <h2>Media de resultados: {{ cubeResults.avg }}</h2>
+  <h2>Media de resultados: {{ results.avg }}</h2>
 </div>
 
 <ol>
-  <li *ngFor="let cube of cubeResults.results">
-    {{ cube.tempo }} ({{ parseAndFormatDate(cube.data) }})
+  <li *ngFor="let time of results.times">
+    {{ time.tempo }} ({{ parseAndFormatDate(time.data) }})
   </li>
 </ol>

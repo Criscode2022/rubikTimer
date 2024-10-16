@@ -3,10 +3,7 @@ import { MatSnackBar, MatSnackBarRef } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
-import {
-  Cube,
-  CubeResults,
-} from "../core/services/algorithm-service/types/cube";
+import { Results, Time } from "../core/services/algorithm-service/types/cube";
 
 @Component({
   selector: "app-times",
@@ -17,44 +14,44 @@ export class TimesComponent implements OnInit {
   private router = inject(Router);
   private _snackBar = inject(MatSnackBar);
 
-  private localData = [] as Cube[];
+  private localData = [] as Time[];
   private keys = [] as string[];
 
-  protected cube2 = {} as CubeResults;
-  protected cube3 = {} as CubeResults;
-  protected cube4 = {} as CubeResults;
+  protected cube2Results = {} as Results;
+  protected cube3Results = {} as Results;
+  protected cube4Results = {} as Results;
 
   ngOnInit() {
     this.localData = Object.values(localStorage).map((data) =>
       JSON.parse(data)
     );
 
-    this.cube2 = {
+    this.cube2Results = {
       avg: this.avg(this.localData.filter((cube) => cube.cubo === 2)),
       cubeType: 2,
-      results: this.localData.filter((cube) => cube.cubo === 2),
+      times: this.localData.filter((cube) => cube.cubo === 2),
     };
 
-    this.cube3 = {
+    this.cube3Results = {
       avg: this.avg(this.localData.filter((cube) => cube.cubo === 3)),
       cubeType: 3,
-      results: this.localData.filter((cube) => cube.cubo === 3),
+      times: this.localData.filter((cube) => cube.cubo === 3),
     };
 
-    this.cube4 = {
+    this.cube4Results = {
       avg: this.avg(this.localData.filter((cube) => cube.cubo === 4)),
       cubeType: 4,
-      results: this.localData.filter((cube) => cube.cubo === 4),
+      times: this.localData.filter((cube) => cube.cubo === 4),
     };
   }
 
-  protected avg(results: Cube[]) {
+  protected avg(results: Time[]) {
     const sum: number = results.reduce(
-      (acc: number, element: Cube) => acc + element.tempo,
+      (acc: number, element: Time) => acc + element.tempo,
       0
     );
 
-    let average = sum / results.length;
+    const average = sum / results.length;
     return Number(average.toFixed(2));
   }
 

@@ -1,10 +1,10 @@
-export interface CubeResults {
+export interface Results {
   avg: number;
   cubeType: number;
-  results: Cube[];
+  times: Time[];
 }
 
-export interface Cube {
+export interface Time {
   cubo: number;
   data: string;
   tempo: number;

@@ -2,7 +2,7 @@ import { Component, Input } from "@angular/core";
 import { format } from "date-fns";
 import { gl } from "date-fns/locale";
 import saveAs from "file-saver";
-import { CubeResults } from "src/app/core/services/algorithm-service/types/cube";
+import { Results } from "src/app/core/services/algorithm-service/types/cube";
 import * as XLSX from "xlsx";
 
 @Component({
@@ -11,15 +11,15 @@ import * as XLSX from "xlsx";
   styleUrls: ["./tab-results.component.css"],
 })
 export class TabResultsComponent {
-  @Input() cubeResults = {} as CubeResults;
+  @Input() results = {} as Results;
 
   protected downloadResults() {
-    const worksheet = XLSX.utils.json_to_sheet(this.cubeResults.results);
+    const worksheet = XLSX.utils.json_to_sheet(this.results.times);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(
       workbook,
       worksheet,
-      `${this.cubeResults.cubeType}x${this.cubeResults.cubeType}`
+      `${this.results.cubeType}x${this.results.cubeType}`
     );
 
     const excelBuffer = XLSX.write(workbook, {
@@ -30,7 +30,7 @@ export class TabResultsComponent {
     const blob = new Blob([excelBuffer], { type: "application/xlsx" });
     saveAs(
       blob,
-      `resultados-${this.cubeResults.cubeType}x${this.cubeResults.cubeType}.xlsx`
+      `resultados-${this.results.cubeType}x${this.results.cubeType}.xlsx`
     );
   }
 

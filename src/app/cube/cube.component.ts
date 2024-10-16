@@ -12,12 +12,12 @@ export class CubeComponent implements OnInit {
   private router = inject(Router);
   private algorithmService = inject(AlgorithmService);
 
-  protected cube = 0;
+  protected cubeType = 0;
 
   private params = this.route.params;
 
-  protected tiempo = 0;
-  private timerId: any;
+  protected time = 0;
+  private interval: any;
   protected timerActive = false;
 
   protected times = [] as number[];
@@ -25,14 +25,14 @@ export class CubeComponent implements OnInit {
 
   ngOnInit(): void {
     this.params.subscribe((params) => {
-      this.cube = Number(params["cube"]);
+      this.cubeType = Number(params["cube"]);
 
       this.algorithmService.generateRandom();
 
       this.stopTimer();
-      this.tiempo = 0;
+      this.time = 0;
 
-      if (![2, 3, 4].includes(this.cube)) {
+      if (![2, 3, 4].includes(this.cubeType)) {
         this.router.navigate(["/3"]);
       }
     });
@@ -54,28 +54,28 @@ export class CubeComponent implements OnInit {
       this.stopTimer();
     }
     this.saveTime();
-    this.tiempo = 0;
+    this.time = 0;
   }
 
   protected startTimer() {
-    this.tiempo = 0;
+    this.time = 0;
     this.timerActive = true;
-    this.timerId = setInterval(() => {
-      this.tiempo += 0.01;
-      this.tiempo = Number(this.tiempo.toFixed(2));
+    this.interval = setInterval(() => {
+      this.time += 0.01;
+      this.time = Number(this.time.toFixed(2));
     }, 10);
   }
 
   protected saveTime() {
-    if (!this.tiempo) {
+    if (!this.time) {
       return;
     }
 
     const date = new Date();
 
     const data = {
-      cubo: this.cube,
-      tempo: this.tiempo,
+      cubo: this.cubeType,
+      tempo: this.time,
       data: date,
     };
 
@@ -83,28 +83,28 @@ export class CubeComponent implements OnInit {
 
     localStorage.setItem(id, JSON.stringify(data));
 
-    this.times.push(this.tiempo);
-    this.avg = this.average(this.times);
+    this.times.push(this.time);
+    this.avg = this.calculateAverage(this.times);
 
     this.stopTimer();
-    this.tiempo = 0;
+    this.time = 0;
   }
 
   protected stopTimer() {
     this.timerActive = false;
-    clearInterval(this.timerId);
+    clearInterval(this.interval);
   }
 
-  private average(array: number[]) {
+  private calculateAverage(times: number[]) {
     let sum = 0;
 
-    array.forEach((element: number) => {
+    times.forEach((element: number) => {
       sum += element;
     });
 
     let average = 0;
-    if (array.length > 0) {
-      average = sum / array.length;
+    if (times.length > 0) {
+      average = sum / times.length;
     }
 
     return average.toFixed(2);
