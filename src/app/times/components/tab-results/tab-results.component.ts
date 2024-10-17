@@ -36,6 +36,6 @@ export class TabResultsComponent {
 
   protected parseAndFormatDate(dateString: string): string {
     const parsedDate = new Date(dateString);
-    return format(parsedDate, "dd MMM yyyy - HH:mm:ss (OOOO) ", { locale: gl });
+    return format(parsedDate, "dd MMM yyyy - HH:mm (OOOO) ", { locale: gl });
   }
 }

@@ -1,5 +1,5 @@
 import { Component, HostListener, inject, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Params, Router } from "@angular/router";
 import { SubsManagerDirective } from "../core/directives/subs-manager/subs-manager.directive";
 import { AlgorithmService } from "../core/services/algorithm-service/algorithm.service";
 import { calculateAverage } from "../shared/utils/calculateAverage";
@@ -15,10 +15,10 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
   private router = inject(Router);
   private algorithmService = inject(AlgorithmService);
 
-  private interval: any;
   protected avg = 0;
-  protected time = 0;
+  private interval: any;
   protected isTimerActive = false;
+  protected time = 0;
   protected times = [] as number[];
   protected type = 0;
 
@@ -28,25 +28,7 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
   ngOnInit(): void {
     this.subs.add(
       this.params.subscribe((params) => {
-        this.type = Number(params["cube"]);
-
-        if (sessionStorage.getItem(this.type.toString())) {
-          const storedTimes = sessionStorage.getItem(this.type.toString());
-          this.times = storedTimes ? JSON.parse(storedTimes) : [];
-          this.avg = calculateAverage(this.times);
-        } else {
-          this.times = [];
-          this.avg = 0;
-        }
-
-        this.algorithmService.generateRandom();
-
-        this.stopTimer();
-        this.time = 0;
-
-        if (![2, 3, 4].includes(this.type)) {
-          this.router.navigate(["/3"]);
-        }
+        this.getCubeType(params);
       })
     );
   }
@@ -68,6 +50,30 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
     }
     this.saveTime();
     this.time = 0;
+  }
+
+  protected getCubeType(params: Params): void {
+    this.type = Number(params["cube"]);
+
+    if (![2, 3, 4].includes(this.type)) {
+      this.router.navigate(["/3"]);
+    }
+
+    this.resetTimer();
+    this.algorithmService.generateRandom();
+
+    this.getSessionStorage();
+  }
+
+  protected getSessionStorage(): void {
+    if (sessionStorage.getItem(this.type.toString())) {
+      const storedTimes = sessionStorage.getItem(this.type.toString());
+      this.times = storedTimes ? JSON.parse(storedTimes) : [];
+      this.avg = calculateAverage(this.times);
+    } else {
+      this.times = [];
+      this.avg = 0;
+    }
   }
 
   protected startTimer(): void {
@@ -95,9 +101,7 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
       cubo: this.type,
       tempo: this.time,
       data: date,
-    };
-
-    // The property name "data" may seem like a typo, but it means "date" in Galician.
+    }; // The property name "data" may seem like a typo, but it means "date" in Galician.
 
     const localId = date.getTime().toString();
     localStorage.setItem(localId, JSON.stringify(time));
@@ -107,6 +111,11 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
 
     this.avg = calculateAverage(this.times);
 
+    this.resetTimer();
+  }
+
+  //This method is needed to allow stopping the timer whithout saving the time in case the user wants to discard it.
+  protected resetTimer(): void {
     this.stopTimer();
     this.time = 0;
   }

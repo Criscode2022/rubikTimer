@@ -4,13 +4,13 @@
   </button>
 
   <h2 class="!text-base md:!text-3xl">
-    Media de resultados:
-    {{ results.avg ? truncateDecimals(results.avg) + '"' : "0.0" }}"
+    Media:
+    {{ results.avg ? truncateDecimals(results.avg) : "0.0" }}"
   </h2>
 </div>
 
 <ol>
   <li *ngFor="let time of results.times">
-    {{ time.tempo }} ({{ parseAndFormatDate(time.data) }})
+    <strong>{{ time.tempo }}"</strong> ({{ parseAndFormatDate(time.data) }})
   </li>
 </ol>
