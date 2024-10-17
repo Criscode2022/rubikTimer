@@ -16,11 +16,14 @@ import { AlgorithmService } from "src/app/core/services/algorithm-service/algori
   styleUrls: ["./header.component.css"],
 })
 export class HeaderComponent implements OnInit {
-  private router = inject(Router);
+  @ViewChild("drawer", { static: true }) drawer!: MatSidenav;
 
+  @ViewChild("myAudio") myAudio!: ElementRef;
+
+  private router = inject(Router);
   protected algorithmService = inject(AlgorithmService);
 
-  protected musica = false;
+  protected music = false;
   protected hide = false;
 
   ngOnInit(): void {
@@ -47,17 +50,13 @@ export class HeaderComponent implements OnInit {
       });
   }
 
-  @ViewChild("drawer", { static: true }) drawer!: MatSidenav;
-
-  @ViewChild("myAudio") myAudio!: ElementRef;
-
   protected closeDrawer() {
     this.drawer.close();
   }
 
   protected toggleMusic() {
     const audioElement = this.myAudio.nativeElement;
-    if (this.musica) {
+    if (this.music) {
       audioElement.play();
     } else {
       audioElement.pause();

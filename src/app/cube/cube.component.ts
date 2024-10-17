@@ -1,6 +1,8 @@
 import { Component, HostListener, inject, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AlgorithmService } from "../core/services/algorithm-service/algorithm.service";
+import { calculateAverage } from "../shared/utils/calculateAverage";
+import { truncateDecimals } from "../shared/utils/truncateDecimals";
 
 @Component({
   selector: "app-cube",
@@ -12,16 +14,15 @@ export class CubeComponent implements OnInit {
   private router = inject(Router);
   private algorithmService = inject(AlgorithmService);
 
+  private interval: any;
+  protected avg = 0;
+  protected time = 0;
+  protected timerActive = false;
+  protected times = [] as number[];
   protected type = 0;
 
   private params = this.route.params;
-
-  protected time = 0;
-  private interval: any;
-  protected timerActive = false;
-
-  protected times = [] as number[];
-  protected avg = "0";
+  protected truncateDecimals = truncateDecimals;
 
   ngOnInit(): void {
     this.params.subscribe((params) => {
@@ -30,10 +31,10 @@ export class CubeComponent implements OnInit {
       if (sessionStorage.getItem(this.type.toString())) {
         const storedTimes = sessionStorage.getItem(this.type.toString());
         this.times = storedTimes ? JSON.parse(storedTimes) : [];
-        this.avg = this.calculateAverage(this.times);
+        this.avg = calculateAverage(this.times);
       } else {
         this.times = [];
-        this.avg = "0";
+        this.avg = 0;
       }
 
       this.algorithmService.generateRandom();
@@ -96,31 +97,15 @@ export class CubeComponent implements OnInit {
     // The property name "data" may seem like a typo, but it means "date" in Galician.
 
     const localId = date.getTime().toString();
-
     localStorage.setItem(localId, JSON.stringify(time));
 
     this.times.push(this.time);
 
     sessionStorage.setItem(this.type.toString(), JSON.stringify(this.times));
 
-    this.avg = this.calculateAverage(this.times);
+    this.avg = calculateAverage(this.times);
 
     this.stopTimer();
     this.time = 0;
-  }
-
-  private calculateAverage(times: number[]) {
-    let sum = 0;
-
-    times.forEach((element: number) => {
-      sum += element;
-    });
-
-    let average = 0;
-    if (times.length > 0) {
-      average = sum / times.length;
-    }
-
-    return average.toFixed(2);
   }
 }

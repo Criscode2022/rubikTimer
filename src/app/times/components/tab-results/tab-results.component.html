@@ -4,7 +4,8 @@
   </button>
 
   <h2 class="!text-base md:!text-3xl">
-    Media de resultados: {{ results.avg ? results.avg : "0.0" }}"
+    Media de resultados:
+    {{ results.avg ? truncateDecimals(results.avg) + '"' : "0.0" }}"
   </h2>
 </div>
 

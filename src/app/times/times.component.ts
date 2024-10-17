@@ -5,6 +5,7 @@ import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
 import { Results } from "../core/types/results";
 import { Time } from "../core/types/time";
+import { calculateAverage } from "../shared/utils/calculateAverage";
 
 @Component({
   selector: "app-times",
@@ -28,38 +29,34 @@ export class TimesComponent implements OnInit {
     );
 
     this.cube2Results = {
-      avg: this.calculateAverage(
-        this.localData.filter((cube) => cube.cubo === 2)
+      avg: calculateAverage(
+        this.localData
+          .filter((cube) => cube.cubo === 2)
+          .map((cube) => cube.tempo)
       ),
       type: 2,
       times: this.localData.filter((cube) => cube.cubo === 2),
     };
 
     this.cube3Results = {
-      avg: this.calculateAverage(
-        this.localData.filter((cube) => cube.cubo === 3)
+      avg: calculateAverage(
+        this.localData
+          .filter((cube) => cube.cubo === 3)
+          .map((cube) => cube.tempo)
       ),
       type: 3,
       times: this.localData.filter((cube) => cube.cubo === 3),
     };
 
     this.cube4Results = {
-      avg: this.calculateAverage(
-        this.localData.filter((cube) => cube.cubo === 4)
+      avg: calculateAverage(
+        this.localData
+          .filter((cube) => cube.cubo === 4)
+          .map((cube) => cube.tempo)
       ),
       type: 4,
       times: this.localData.filter((cube) => cube.cubo === 4),
     };
-  }
-
-  protected calculateAverage(results: Time[]) {
-    const sum: number = results.reduce(
-      (acc: number, element: Time) => acc + element.tempo,
-      0
-    );
-
-    const avg = sum / results.length;
-    return Number(avg.toFixed(2));
   }
 
   protected downloadAll() {

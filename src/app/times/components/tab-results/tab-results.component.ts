@@ -4,6 +4,7 @@ import { gl } from "date-fns/locale";
 import saveAs from "file-saver";
 import { Results } from "src/app/core/types/results";
 import * as XLSX from "xlsx";
+import { truncateDecimals } from "../../../shared/utils/truncateDecimals";
 
 @Component({
   selector: "app-tab-results",
@@ -12,6 +13,8 @@ import * as XLSX from "xlsx";
 })
 export class TabResultsComponent {
   @Input() results = {} as Results;
+
+  protected truncateDecimals = truncateDecimals;
 
   protected downloadResults() {
     const worksheet = XLSX.utils.json_to_sheet(this.results.times);

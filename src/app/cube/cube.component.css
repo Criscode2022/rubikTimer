@@ -11,11 +11,3 @@ h2 {
   font-size: 3rem;
   margin: 40px 0 40px 0 !important;
 }
-
-@media (max-width: 425px) {
-  h2 {
-    position: relative;
-    top: 15pt;
-    margin: 20px 0 40px 0 !important;
-  }
-}

@@ -40,13 +40,13 @@
           routerLink="times"
           >history</mat-icon
         >
-        <mat-slide-toggle [(ngModel)]="musica" (ngModelChange)="toggleMusic()">
+        <mat-slide-toggle [(ngModel)]="music" (ngModelChange)="toggleMusic()">
           <mat-icon>music_note</mat-icon>
         </mat-slide-toggle>
         <audio
           #myAudio
           src="https://github.com/Criscode2022/contadorRubik/blob/main/assets/You%20%E2%80%94%20myuu%20(128%20kbps).mp3?raw=true"
-          [autoplay]="musica"
+          [autoplay]="music"
         ></audio>
       </mat-toolbar-row>
 
