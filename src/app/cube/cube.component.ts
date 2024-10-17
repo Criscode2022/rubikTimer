@@ -49,7 +49,7 @@ export class CubeComponent implements OnInit {
   }
 
   @HostListener("window:keydown.space", ["$event"])
-  onSpaceKeyDown(event: KeyboardEvent) {
+  protected onSpaceKeyDown(event: KeyboardEvent): void {
     event.preventDefault();
     if (this.isTimerActive) {
       this.stopTimer();
@@ -59,7 +59,7 @@ export class CubeComponent implements OnInit {
   }
 
   @HostListener("window:keydown.enter", ["$event"])
-  onEnterKeyDown() {
+  protected onEnterKeyDown(): void {
     if (this.isTimerActive) {
       this.stopTimer();
     }
@@ -67,7 +67,7 @@ export class CubeComponent implements OnInit {
     this.time = 0;
   }
 
-  protected startTimer() {
+  protected startTimer(): void {
     this.time = 0;
     this.isTimerActive = true;
     this.interval = setInterval(() => {
@@ -76,12 +76,12 @@ export class CubeComponent implements OnInit {
     }, 10);
   }
 
-  protected stopTimer() {
+  protected stopTimer(): void {
     this.isTimerActive = false;
     clearInterval(this.interval);
   }
 
-  protected saveTime() {
+  protected saveTime(): void {
     if (!this.time) {
       return;
     }
@@ -100,7 +100,6 @@ export class CubeComponent implements OnInit {
     localStorage.setItem(localId, JSON.stringify(time));
 
     this.times.push(this.time);
-
     sessionStorage.setItem(this.type.toString(), JSON.stringify(this.times));
 
     this.avg = calculateAverage(this.times);

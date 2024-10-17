@@ -1,4 +1,4 @@
-export function calculateAverage(times: number[]) {
+export function calculateAverage(times: number[]): number {
   if (times.includes(0)) {
     return 0;
   }
@@ -10,6 +10,5 @@ export function calculateAverage(times: number[]) {
 
   const avg = sum / times.length;
 
-  console.log(avg, "calculateAverage");
   return avg;
 }

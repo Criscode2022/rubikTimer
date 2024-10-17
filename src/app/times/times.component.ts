@@ -23,7 +23,7 @@ export class TimesComponent implements OnInit {
   protected cube3Results = {} as Results;
   protected cube4Results = {} as Results;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.localData = Object.values(localStorage).map((data) =>
       JSON.parse(data)
     );
@@ -59,7 +59,7 @@ export class TimesComponent implements OnInit {
     };
   }
 
-  protected downloadAll() {
+  protected downloadAll(): void {
     const worksheet = XLSX.utils.json_to_sheet(this.localData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Todo");
@@ -73,7 +73,7 @@ export class TimesComponent implements OnInit {
     saveAs(blob, "resultadosTodo.xlsx");
   }
 
-  protected clearLocalStorage() {
+  protected clearLocalStorage(): void {
     const confirmDelete = window.confirm(
       "Seguro que queres eliminar todos os tempos gardados? Esta acción non pode ser revertida"
     );

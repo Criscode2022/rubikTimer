@@ -50,11 +50,11 @@ export class HeaderComponent implements OnInit {
       });
   }
 
-  protected closeDrawer() {
+  protected closeDrawer(): void {
     this.drawer.close();
   }
 
-  protected toggleMusic() {
+  protected toggleMusic(): void {
     const audioElement = this.myAudio.nativeElement;
     if (this.isMusicPlaying) {
       audioElement.play();
@@ -63,7 +63,7 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  protected navigate(hide: boolean) {
+  protected navigate(hide: boolean): void {
     if (!hide) {
       return;
     }

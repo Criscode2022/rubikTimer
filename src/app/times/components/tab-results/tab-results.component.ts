@@ -16,7 +16,7 @@ export class TabResultsComponent {
 
   protected truncateDecimals = truncateDecimals;
 
-  protected downloadResults() {
+  protected downloadResults(): void {
     const worksheet = XLSX.utils.json_to_sheet(this.results.times);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(
