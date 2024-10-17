@@ -35,32 +35,35 @@
     <mat-toolbar color="primary">
       <mat-toolbar-row class="flex justify-start md:justify-between gap-4">
         <mat-icon
-          [class.invisible]="hide"
+          [class.invisible]="shouldHide"
           class="cursor-pointer hover:text-yellow-500"
           routerLink="times"
           >history</mat-icon
         >
-        <mat-slide-toggle [(ngModel)]="music" (ngModelChange)="toggleMusic()">
+        <mat-slide-toggle
+          [(ngModel)]="isMusicPlaying"
+          (ngModelChange)="toggleMusic()"
+        >
           <mat-icon>music_note</mat-icon>
         </mat-slide-toggle>
         <audio
           #myAudio
           src="https://github.com/Criscode2022/contadorRubik/blob/main/assets/You%20%E2%80%94%20myuu%20(128%20kbps).mp3?raw=true"
-          [autoplay]="music"
+          [autoplay]="isMusicPlaying"
         ></audio>
       </mat-toolbar-row>
 
       <button
         class="md:hidden flex items-center absolute top-1 right-2"
         (click)="drawer.toggle()"
-        *ngIf="!hide"
+        *ngIf="!shouldHide"
       >
         <mat-icon>menu</mat-icon>
       </button>
 
       <mat-toolbar-row class="flex justify-center">
         <h1
-          (click)="this.algorithmService.generateRandom(); navigate(hide)"
+          (click)="this.algorithmService.generateRandom(); navigate(shouldHide)"
           class="!text-4xl md:!text-7xl hover:text-orange-500 cursor-pointer !font-bold no-select"
         >
           GaliRubik
@@ -68,7 +71,7 @@
       </mat-toolbar-row>
 
       <mat-toolbar-row
-        *ngIf="!hide"
+        *ngIf="!shouldHide"
         class="justify-center !hidden md:!flex gap-24 cube-buttons"
       >
         <button mat-button routerLink="2" routerLinkActive="active">2x2</button>
@@ -78,7 +81,7 @@
 
       <mat-toolbar-row class="flex justify-center items-center">
         <span
-          *ngIf="!hide"
+          *ngIf="!shouldHide"
           class="mx-4 px-4 text-wrap text-xs md:text-2xl md:!pt-4 md:!mt-2"
           >{{ algorithmService.algorithms[algorithmService.random].algoritmo }}
         </span>

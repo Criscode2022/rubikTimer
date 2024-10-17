@@ -17,7 +17,7 @@ export class CubeComponent implements OnInit {
   private interval: any;
   protected avg = 0;
   protected time = 0;
-  protected timerActive = false;
+  protected isTimerActive = false;
   protected times = [] as number[];
   protected type = 0;
 
@@ -51,7 +51,7 @@ export class CubeComponent implements OnInit {
   @HostListener("window:keydown.space", ["$event"])
   onSpaceKeyDown(event: KeyboardEvent) {
     event.preventDefault();
-    if (this.timerActive) {
+    if (this.isTimerActive) {
       this.stopTimer();
     } else {
       this.startTimer();
@@ -60,7 +60,7 @@ export class CubeComponent implements OnInit {
 
   @HostListener("window:keydown.enter", ["$event"])
   onEnterKeyDown() {
-    if (this.timerActive) {
+    if (this.isTimerActive) {
       this.stopTimer();
     }
     this.saveTime();
@@ -69,7 +69,7 @@ export class CubeComponent implements OnInit {
 
   protected startTimer() {
     this.time = 0;
-    this.timerActive = true;
+    this.isTimerActive = true;
     this.interval = setInterval(() => {
       this.time += 0.01;
       this.time = Number(this.time.toFixed(2));
@@ -77,7 +77,7 @@ export class CubeComponent implements OnInit {
   }
 
   protected stopTimer() {
-    this.timerActive = false;
+    this.isTimerActive = false;
     clearInterval(this.interval);
   }
 

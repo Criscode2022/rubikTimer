@@ -23,14 +23,14 @@ export class HeaderComponent implements OnInit {
   private router = inject(Router);
   protected algorithmService = inject(AlgorithmService);
 
-  protected music = false;
-  protected hide = false;
+  protected isMusicPlaying = false;
+  protected shouldHide = false;
 
   ngOnInit(): void {
     const initialUrl = this.router.url;
 
     if (initialUrl === "/times") {
-      this.hide = true;
+      this.shouldHide = true;
     }
 
     this.router.events
@@ -43,9 +43,9 @@ export class HeaderComponent implements OnInit {
         const currentUrl = event.urlAfterRedirects;
 
         if (currentUrl === "/times") {
-          this.hide = true;
+          this.shouldHide = true;
         } else {
-          this.hide = false;
+          this.shouldHide = false;
         }
       });
   }
@@ -56,7 +56,7 @@ export class HeaderComponent implements OnInit {
 
   protected toggleMusic() {
     const audioElement = this.myAudio.nativeElement;
-    if (this.music) {
+    if (this.isMusicPlaying) {
       audioElement.play();
     } else {
       audioElement.pause();

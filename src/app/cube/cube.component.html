@@ -1,7 +1,7 @@
 <main class="flex flex-col items-center">
   <h2
     [ngClass]="{
-      'rotate-cube': timerActive,
+      'rotate-cube': isTimerActive,
       'cube-2': type === 2,
       'cube-3': type === 3,
       'cube-4': type === 4
@@ -12,7 +12,7 @@
 
   <p
     class="bg-white w-4/5 md:w-1/3 h-96 md:h-80 text-center border border-gray-500 rounded-lg text-9xl grid place-items-center"
-    (click)="timerActive ? stopTimer() : startTimer()"
+    (click)="isTimerActive ? stopTimer() : startTimer()"
   >
     {{ truncateDecimals(time, 1) }}
   </p>
@@ -41,7 +41,7 @@
 </div>
 
 <button
-  *ngIf="time && !timerActive"
+  *ngIf="time && !isTimerActive"
   (click)="saveTime()"
   class="!fixed bottom-2 right-2 md:!hidden"
   mat-fab
