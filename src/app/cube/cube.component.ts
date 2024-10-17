@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from "@angular/core";
+import { Component, HostListener, inject, OnInit, signal } from "@angular/core";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { SubsManagerDirective } from "../core/directives/subs-manager/subs-manager.directive";
 import { AlgorithmService } from "../core/services/algorithm-service/algorithm.service";
@@ -15,9 +15,11 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
   private router = inject(Router);
   private algorithmService = inject(AlgorithmService);
 
+  protected hasNewTime = signal(false);
+  protected isTimerActive = signal(false);
+
   protected avg = 0;
   private interval: any;
-  protected isTimerActive = false;
   protected time = 0;
   protected times = [] as number[];
   protected type = 0;
@@ -36,7 +38,7 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
   @HostListener("window:keydown.space", ["$event"])
   protected onSpaceKeyDown(event: KeyboardEvent): void {
     event.preventDefault();
-    if (this.isTimerActive) {
+    if (this.isTimerActive()) {
       this.stopTimer();
     } else {
       this.startTimer();
@@ -45,7 +47,7 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
 
   @HostListener("window:keydown.enter", ["$event"])
   protected onEnterKeyDown(): void {
-    if (this.isTimerActive) {
+    if (this.isTimerActive()) {
       this.stopTimer();
     }
     this.saveTime();
@@ -78,7 +80,7 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
 
   protected startTimer(): void {
     this.time = 0;
-    this.isTimerActive = true;
+    this.isTimerActive.set(true);
     this.interval = setInterval(() => {
       this.time += 0.01;
       this.time = Number(this.time.toFixed(2));
@@ -86,7 +88,7 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
   }
 
   protected stopTimer(): void {
-    this.isTimerActive = false;
+    this.isTimerActive.set(false);
     clearInterval(this.interval);
   }
 
@@ -112,6 +114,12 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
     this.avg = calculateAverage(this.times);
 
     this.resetTimer();
+
+    this.hasNewTime.set(true);
+
+    setTimeout(() => {
+      this.hasNewTime.set(false);
+    }, 2000);
   }
 
   //This method is needed to allow stopping the timer whithout saving the time in case the user wants to discard it.
