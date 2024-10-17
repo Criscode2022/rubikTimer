@@ -3,6 +3,7 @@ import { MatSnackBar, MatSnackBarRef } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
+import { SubsManagerDirective } from "../core/directives/subs-manager/subs-manager.directive";
 import { Results } from "../core/types/results";
 import { Time } from "../core/types/time";
 import { calculateAverage } from "../shared/utils/calculateAverage";
@@ -12,7 +13,7 @@ import { calculateAverage } from "../shared/utils/calculateAverage";
   templateUrl: "./times.component.html",
   styleUrls: ["./times.component.css"],
 })
-export class TimesComponent implements OnInit {
+export class TimesComponent extends SubsManagerDirective implements OnInit {
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
 
@@ -86,9 +87,11 @@ export class TimesComponent implements OnInit {
     sessionStorage.clear();
 
     let snackBarRef = this.openSnackBar("Datos eliminados correctamente", "OK");
-    snackBarRef.afterDismissed().subscribe(() => {
-      this.router.navigate(["/"]);
-    });
+    this.subs.add(
+      snackBarRef.afterDismissed().subscribe(() => {
+        this.router.navigate(["/"]);
+      })
+    );
 
     setTimeout(() => {
       window.location.reload();

@@ -4,7 +4,7 @@ export function calculateAverage(times: number[]): number {
   }
 
   const sum: number = times.reduce(
-    (acc: number, time: number) => acc + time,
+    (accumulator: number, time: number) => accumulator + time,
     0
   );
 

@@ -1,5 +1,6 @@
 import { Component, HostListener, inject, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { SubsManagerDirective } from "../core/directives/subs-manager/subs-manager.directive";
 import { AlgorithmService } from "../core/services/algorithm-service/algorithm.service";
 import { calculateAverage } from "../shared/utils/calculateAverage";
 import { truncateDecimals } from "../shared/utils/truncateDecimals";
@@ -9,7 +10,7 @@ import { truncateDecimals } from "../shared/utils/truncateDecimals";
   templateUrl: "./cube.component.html",
   styleUrls: ["./cube.component.css"],
 })
-export class CubeComponent implements OnInit {
+export class CubeComponent extends SubsManagerDirective implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private algorithmService = inject(AlgorithmService);
@@ -25,27 +26,29 @@ export class CubeComponent implements OnInit {
   protected truncateDecimals = truncateDecimals;
 
   ngOnInit(): void {
-    this.params.subscribe((params) => {
-      this.type = Number(params["cube"]);
+    this.subs.add(
+      this.params.subscribe((params) => {
+        this.type = Number(params["cube"]);
 
-      if (sessionStorage.getItem(this.type.toString())) {
-        const storedTimes = sessionStorage.getItem(this.type.toString());
-        this.times = storedTimes ? JSON.parse(storedTimes) : [];
-        this.avg = calculateAverage(this.times);
-      } else {
-        this.times = [];
-        this.avg = 0;
-      }
+        if (sessionStorage.getItem(this.type.toString())) {
+          const storedTimes = sessionStorage.getItem(this.type.toString());
+          this.times = storedTimes ? JSON.parse(storedTimes) : [];
+          this.avg = calculateAverage(this.times);
+        } else {
+          this.times = [];
+          this.avg = 0;
+        }
 
-      this.algorithmService.generateRandom();
+        this.algorithmService.generateRandom();
 
-      this.stopTimer();
-      this.time = 0;
+        this.stopTimer();
+        this.time = 0;
 
-      if (![2, 3, 4].includes(this.type)) {
-        this.router.navigate(["/3"]);
-      }
-    });
+        if (![2, 3, 4].includes(this.type)) {
+          this.router.navigate(["/3"]);
+        }
+      })
+    );
   }
 
   @HostListener("window:keydown.space", ["$event"])
