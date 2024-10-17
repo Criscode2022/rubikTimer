@@ -1,0 +1,40 @@
+@use 'assets/scss/colors';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: colors.$bg-color;
+}
+
+h2 {
+  padding: 20px;
+  color: white;
+  border: solid black 2px;
+  border-radius: 10px;
+  background: blue;
+  transition: all 0.5s ease;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+ol li {
+  list-style: decimal;
+}
+
+.mat-mdc-tab-body-content {
+  padding: 30px;
+}
+
+.no-select {
+  user-select: none; /* Standard syntax */
+  -webkit-user-select: none; /* Chrome, Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Edge */
+}
+

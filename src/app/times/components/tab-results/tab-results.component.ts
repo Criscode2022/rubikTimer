@@ -9,7 +9,7 @@ import { truncateDecimals } from "../../../shared/utils/truncateDecimals";
 @Component({
   selector: "app-tab-results",
   templateUrl: "./tab-results.component.html",
-  styleUrls: ["./tab-results.component.css"],
+  styleUrls: ["./tab-results.component.scss"],
 })
 export class TabResultsComponent {
   @Input() results = {} as Results;

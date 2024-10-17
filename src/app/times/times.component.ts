@@ -11,7 +11,7 @@ import { calculateAverage } from "../shared/utils/calculateAverage";
 @Component({
   selector: "app-times",
   templateUrl: "./times.component.html",
-  styleUrls: ["./times.component.css"],
+  styleUrls: ["./times.component.scss"],
 })
 export class TimesComponent extends SubsManagerDirective implements OnInit {
   private router = inject(Router);

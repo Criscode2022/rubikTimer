@@ -1,0 +1,39 @@
+.cube-2 {
+  background: blue;
+}
+
+.cube-4 {
+  background: orange;
+}
+
+.rotate-cube {
+  animation: cube 2s infinite;
+}
+
+@keyframes cube {
+  0% {
+    color: white;
+    transform: rotateX(0deg) rotateY(0deg);
+    background: red;
+  }
+  25% {
+    color: white;
+    transform: rotateX(180deg) rotateY(0deg);
+    background: yellow;
+  }
+  50% {
+    color: white;
+    transform: rotateX(180deg) rotateY(180deg);
+    background: green;
+  }
+  75% {
+    color: white;
+    transform: rotateX(0deg) rotateY(180deg);
+    background: orange;
+  }
+  100% {
+    color: white;
+    transform: rotateX(0deg) rotateY(0deg);
+    background: red;
+  }
+}

@@ -8,7 +8,7 @@ import { truncateDecimals } from "../shared/utils/truncateDecimals";
 @Component({
   selector: "app-cube",
   templateUrl: "./cube.component.html",
-  styleUrls: ["./cube.component.css"],
+  styleUrls: ["./cube.component.scss"],
 })
 export class CubeComponent extends SubsManagerDirective implements OnInit {
   private route = inject(ActivatedRoute);
