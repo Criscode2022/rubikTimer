@@ -1,4 +1,11 @@
-import { Component, HostListener, inject, OnInit, signal } from "@angular/core";
+import {
+  Component,
+  effect,
+  HostListener,
+  inject,
+  OnInit,
+  signal,
+} from "@angular/core";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { SubsManagerDirective } from "../core/directives/subs-manager/subs-manager.directive";
 import { AlgorithmService } from "../core/services/algorithm-service/algorithm.service";
@@ -27,6 +34,13 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
   private params = this.route.params;
   protected truncateDecimals = truncateDecimals;
 
+  constructor() {
+    super();
+    effect(() => {
+      this.isTimerActive() ? this.startTimer() : this.stopTimer();
+    });
+  }
+
   ngOnInit(): void {
     this.subs.add(
       this.params.subscribe((params) => {
@@ -38,20 +52,18 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
   @HostListener("window:keydown.space", ["$event"])
   protected onSpaceKeyDown(event: KeyboardEvent): void {
     event.preventDefault();
-    if (this.isTimerActive()) {
-      this.stopTimer();
-    } else {
-      this.startTimer();
-    }
+    this.isTimerActive.set(!this.isTimerActive());
   }
 
   @HostListener("window:keydown.enter", ["$event"])
-  protected onEnterKeyDown(): void {
+  protected onEnterKeyDown(event: KeyboardEvent): void {
+    event.preventDefault();
+
     if (this.isTimerActive()) {
-      this.stopTimer();
+      this.isTimerActive.set(false);
     }
+
     this.saveTime();
-    this.time = 0;
   }
 
   protected getCubeType(params: Params): void {
@@ -61,13 +73,14 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
       this.router.navigate(["/3"]);
     }
 
+    this.isTimerActive.set(false);
     this.resetTimer();
     this.algorithmService.generateRandom();
 
-    this.getSessionStorage();
+    this.getSessionStorageData();
   }
 
-  protected getSessionStorage(): void {
+  protected getSessionStorageData(): void {
     if (sessionStorage.getItem(this.type.toString())) {
       const storedTimes = sessionStorage.getItem(this.type.toString());
       this.times = storedTimes ? JSON.parse(storedTimes) : [];
@@ -80,7 +93,6 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
 
   protected startTimer(): void {
     this.time = 0;
-    this.isTimerActive.set(true);
     this.interval = setInterval(() => {
       this.time += 0.01;
       this.time = Number(this.time.toFixed(2));
@@ -88,7 +100,6 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
   }
 
   protected stopTimer(): void {
-    this.isTimerActive.set(false);
     clearInterval(this.interval);
   }
 
@@ -112,10 +123,9 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
     sessionStorage.setItem(this.type.toString(), JSON.stringify(this.times));
 
     this.avg = calculateAverage(this.times);
-
-    this.resetTimer();
-
     this.hasNewTime.set(true);
+
+    this.time = 0;
 
     setTimeout(() => {
       this.hasNewTime.set(false);
