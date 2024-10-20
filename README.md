@@ -1,27 +1,7 @@
 # GaliRubik
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.3.
+## Descripción
 
-## Development server
+Responsive Single-Page Application (SPA) realizada con el framework Angular en TypeScript con las librerías Angular Material y SheetJS que trabaja sobre el Local Storage con operaciones de escritura, lectura y descarga de datos. Esta aplicación consiste en un cronómetro para almacenar y clasificar por fecha y tipo de cubo los tiempos en la resolución del cubo de Rubik.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Esta aplicación, además de ejemplificar nuevamente las posibilidades de la librería Angular Material para un diseño eficaz y accesible para todo tipo de aplicaciones, tiene el principal objetivo de mostrar las capacidades de interacción con el DOM de Angular con el DOM a través de eventos y de data binding.
