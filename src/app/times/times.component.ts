@@ -17,8 +17,7 @@ export class TimesComponent extends SubsManagerDirective implements OnInit {
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
 
-  private localData = [] as Time[];
-  private keys = [] as string[];
+  protected localData = [] as Time[];
 
   protected cube2Results = {} as Results;
   protected cube3Results = {} as Results;
@@ -61,6 +60,10 @@ export class TimesComponent extends SubsManagerDirective implements OnInit {
   }
 
   protected downloadAll(): void {
+    if (!this.localData.length) {
+      return;
+    }
+
     const worksheet = XLSX.utils.json_to_sheet(this.localData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Todo");

@@ -1,9 +1,15 @@
 <div class="flex justify-between items-center gap-1 p-4">
-  <button mat-raised-button color="primary" (click)="downloadAll()">
+  <button
+    [disabled]="!localData.length"
+    mat-raised-button
+    color="primary"
+    (click)="downloadAll()"
+  >
     Descargar todos os tempos
   </button>
 
   <button
+    [disabled]="!localData.length"
     mat-fab
     (click)="clearLocalStorage()"
     color="warn"

@@ -1,16 +1,24 @@
-<div class="flex justify-between gap-4">
-  <button mat-fab (click)="downloadResults()">
-    <mat-icon>download</mat-icon>
-  </button>
+<ng-container *ngIf="!results.times?.length; else resultsTemplate">
+  <div class="flex justify-center">
+    <h2 class="!text-base md:!text-3xl">No results found for this cube type</h2>
+  </div>
+</ng-container>
 
-  <h2 class="!text-base md:!text-3xl">
-    Media:
-    {{ results.avg ? truncateDecimals(results.avg) : "0.0" }}"
-  </h2>
-</div>
+<ng-template #resultsTemplate>
+  <div class="flex justify-between gap-4">
+    <button mat-fab (click)="downloadResults()">
+      <mat-icon>download</mat-icon>
+    </button>
 
-<ol>
-  <li *ngFor="let time of results.times">
-    <strong>{{ time.tempo }}"</strong> ({{ parseAndFormatDate(time.data) }})
-  </li>
-</ol>
+    <h2 class="!text-base md:!text-3xl">
+      Media:
+      {{ truncateDecimals(results.avg) }}"
+    </h2>
+  </div>
+
+  <ol>
+    <li *ngFor="let time of results.times">
+      <strong>{{ time.tempo }}"</strong> ({{ parseAndFormatDate(time.data) }})
+    </li>
+  </ol>
+</ng-template>
