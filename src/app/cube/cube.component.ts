@@ -56,7 +56,13 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
   }
 
   @HostListener("window:keydown.enter", ["$event"])
-  protected onEnterKeyDown(): void {
+  protected onEnterKeyDown(event: KeyboardEvent): void {
+    event.preventDefault();
+
+    if (this.isTimerActive()) {
+      this.isTimerActive.set(false);
+    }
+
     this.saveTime();
   }
 
@@ -67,13 +73,14 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
       this.router.navigate(["/3"]);
     }
 
+    this.isTimerActive.set(false);
     this.resetTimer();
     this.algorithmService.generateRandom();
 
-    this.getSessionStorage();
+    this.getSessionStorageData();
   }
 
-  protected getSessionStorage(): void {
+  protected getSessionStorageData(): void {
     if (sessionStorage.getItem(this.type.toString())) {
       const storedTimes = sessionStorage.getItem(this.type.toString());
       this.times = storedTimes ? JSON.parse(storedTimes) : [];
@@ -118,10 +125,9 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
     sessionStorage.setItem(this.type.toString(), JSON.stringify(this.times));
 
     this.avg = calculateAverage(this.times);
-
-    this.resetTimer();
-
     this.hasNewTime.set(true);
+
+    this.time = 0;
 
     setTimeout(() => {
       this.hasNewTime.set(false);
