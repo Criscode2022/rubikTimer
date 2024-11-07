@@ -1,6 +1,8 @@
 <ng-container *ngIf="!results.times?.length; else resultsTemplate">
   <div class="flex justify-center">
-    <h2 class="!text-base md:!text-3xl">No results found for this cube type</h2>
+    <h2 class="!text-base md:!text-3xl">
+      Non hai resultados para este tipo de cubo
+    </h2>
   </div>
 </ng-container>
 
@@ -17,7 +19,7 @@
   </div>
 
   <ol>
-    <li *ngFor="let time of results.times">
+    <li *ngFor="let time of results.times" class="md:text-3xl md:mx-6">
       <strong>{{ time.tempo }}"</strong> ({{ parseAndFormatDate(time.data) }})
     </li>
   </ol>
