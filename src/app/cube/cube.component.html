@@ -3,12 +3,12 @@
     class="!mt-4 md:!mt-8 bg-green-700 !text-3xl !py-2 md:!text-5xl"
     [ngClass]="{
       'rotate-cube': isTimerActive(),
-      'cube-2': type === 2,
-      'cube-3': type === 3,
-      'cube-4': type === 4
+      'cube-2': type() === 2,
+      'cube-3': type() === 3,
+      'cube-4': type() === 4
     }"
   >
-    {{ type }}x{{ type }}
+    {{ type() }}x{{ type() }}
   </h2>
 
   <p
@@ -37,7 +37,7 @@
   </div>
 
   <p class="md:text-xl">
-    <strong>Media desta sesión: {{ truncateDecimals(avg) }}"</strong>
+    <strong>Media desta sesión: {{ truncateDecimals(avg()) }}"</strong>
   </p>
 </div>
 
@@ -45,7 +45,12 @@
   *ngIf="hasNewTime()"
   class="fixed bottom-4 md:hidden flex justify-center w-full"
 >
-  <button class="animate-bounce" mat-icon-button color="primary">
+  <button
+    class="animate-bounce"
+    (click)="scrollBottom()"
+    mat-icon-button
+    color="primary"
+  >
     <mat-icon> expand_circle_down </mat-icon>
   </button>
 </div>

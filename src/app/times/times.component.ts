@@ -17,7 +17,7 @@ export class TimesComponent extends SubsManagerDirective implements OnInit {
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
 
-  protected localData = [] as Time[];
+  protected localData: Time[] = [];
 
   protected cube2Results = {} as Results;
   protected cube3Results = {} as Results;
@@ -28,34 +28,18 @@ export class TimesComponent extends SubsManagerDirective implements OnInit {
       JSON.parse(data)
     );
 
-    this.cube2Results = {
-      avg: calculateAverage(
-        this.localData
-          .filter((cube) => cube.cubo === 2)
-          .map((cube) => cube.tempo)
-      ),
-      type: 2,
-      times: this.localData.filter((cube) => cube.cubo === 2),
-    };
+    this.cube2Results = this.getCubeResults(2);
+    this.cube3Results = this.getCubeResults(3);
+    this.cube4Results = this.getCubeResults(4);
+  }
 
-    this.cube3Results = {
-      avg: calculateAverage(
-        this.localData
-          .filter((cube) => cube.cubo === 3)
-          .map((cube) => cube.tempo)
-      ),
-      type: 3,
-      times: this.localData.filter((cube) => cube.cubo === 3),
-    };
+  private getCubeResults(cubeType: number): Results {
+    const times = this.localData.filter((cube) => cube.cubo === cubeType);
 
-    this.cube4Results = {
-      avg: calculateAverage(
-        this.localData
-          .filter((cube) => cube.cubo === 4)
-          .map((cube) => cube.tempo)
-      ),
-      type: 4,
-      times: this.localData.filter((cube) => cube.cubo === 4),
+    return {
+      type: cubeType,
+      times: times,
+      avg: calculateAverage(times.map((time) => time.tempo)),
     };
   }
 

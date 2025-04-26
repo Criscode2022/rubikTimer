@@ -22,17 +22,17 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
   private router = inject(Router);
   private algorithmService = inject(AlgorithmService);
 
-  protected hasNewTime = signal(false);
-  protected isTimerActive = signal(false);
-
-  protected avg = 0;
-  private interval: any;
-  protected time = 0;
-  protected times = [] as number[];
-  protected type = 0;
-
   private params = this.route.params;
   protected truncateDecimals = truncateDecimals;
+  private interval: ReturnType<typeof setInterval> | null = null;
+
+  protected hasNewTime = signal(false);
+  protected isTimerActive = signal(false);
+  protected avg = signal(0);
+  protected type = signal(0);
+
+  protected time = 0;
+  protected times: number[] = [];
 
   constructor() {
     super();
@@ -67,9 +67,9 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
   }
 
   protected getCubeType(params: Params): void {
-    this.type = Number(params["cube"]);
+    this.type.set(Number(params["cube"]));
 
-    if (![2, 3, 4].includes(this.type)) {
+    if (![2, 3, 4].includes(this.type())) {
       this.router.navigate(["/3"]);
     }
 
@@ -81,13 +81,13 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
   }
 
   protected getSessionStorageData(): void {
-    if (sessionStorage.getItem(this.type.toString())) {
-      const storedTimes = sessionStorage.getItem(this.type.toString());
+    if (sessionStorage.getItem(this.type().toString())) {
+      const storedTimes = sessionStorage.getItem(this.type().toString());
       this.times = storedTimes ? JSON.parse(storedTimes) : [];
-      this.avg = calculateAverage(this.times);
+      this.avg.set(calculateAverage(this.times));
     } else {
       this.times = [];
-      this.avg = 0;
+      this.avg.set(0);
     }
   }
 
@@ -100,7 +100,9 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
   }
 
   protected stopTimer(): void {
-    clearInterval(this.interval);
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
 
   protected saveTime(): void {
@@ -113,10 +115,12 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
     const date = new Date();
 
     const time = {
-      cubo: this.type,
+      cubo: this.type(),
       tempo: this.time,
       data: date,
     }; // The property name "data" may seem like a typo, but it means "date" in Galician.
+
+    console.log("Saving time:", time);
 
     const localId = date.getTime().toString();
     localStorage.setItem(localId, JSON.stringify(time));
@@ -124,7 +128,7 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
     this.times.push(this.time);
     sessionStorage.setItem(this.type.toString(), JSON.stringify(this.times));
 
-    this.avg = calculateAverage(this.times);
+    this.avg.set(calculateAverage(this.times));
     this.hasNewTime.set(true);
 
     this.time = 0;
@@ -138,5 +142,12 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
   protected resetTimer(): void {
     this.stopTimer();
     this.time = 0;
+  }
+
+  protected scrollBottom(): void {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth",
+    });
   }
 }
