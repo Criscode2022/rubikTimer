@@ -8,7 +8,12 @@
 
 <ng-template #resultsTemplate>
   <div class="flex justify-between gap-4">
-    <button mat-fab (click)="downloadResults()">
+    <button
+      mat-fab
+      matTooltip="Descargar resultados deste cubo"
+      matTooltipPosition="above"
+      (click)="downloadResults()"
+    >
       <mat-icon>download</mat-icon>
     </button>
 
