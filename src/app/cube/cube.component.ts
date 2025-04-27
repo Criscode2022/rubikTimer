@@ -9,6 +9,7 @@ import {
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { SubsManagerDirective } from "../core/directives/subs-manager/subs-manager.directive";
 import { AlgorithmService } from "../core/services/algorithm-service/algorithm.service";
+import { CubeTypes, cubeTypesArray } from "../core/types/cubeTypes";
 import { calculateAverage } from "../shared/utils/calculateAverage";
 import { truncateDecimals } from "../shared/utils/truncateDecimals";
 
@@ -29,7 +30,7 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
   protected hasNewTime = signal(false);
   protected isTimerActive = signal(false);
   protected avg = signal(0);
-  protected type = signal(0);
+  protected type = signal<CubeTypes>(3);
 
   protected time = 0;
   protected times: number[] = [];
@@ -67,9 +68,11 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
   }
 
   protected getCubeType(params: Params): void {
-    this.type.set(Number(params["cube"]));
-
-    if (![2, 3, 4].includes(this.type())) {
+    const cubeType = Number(params["cube"]);
+    if (cubeTypesArray.includes(cubeType)) {
+      this.type.set(cubeType as CubeTypes);
+    } else {
+      this.type.set(3);
       this.router.navigate(["/3"]);
     }
 
@@ -119,8 +122,6 @@ export class CubeComponent extends SubsManagerDirective implements OnInit {
       tempo: this.time,
       data: date,
     }; // The property name "data" may seem like a typo, but it means "date" in Galician.
-
-    console.log("Saving time:", time);
 
     const localId = date.getTime().toString();
     localStorage.setItem(localId, JSON.stringify(time));
