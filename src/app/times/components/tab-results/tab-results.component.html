@@ -19,7 +19,7 @@
   </div>
 
   <ol>
-    <li *ngFor="let time of results.times" class="md:text-3xl md:mx-6">
+    <li *ngFor="let time of results.times" class="md:text-3xl my-4 md:mx-6">
       <strong>{{ time.tempo }}"</strong> ({{ parseAndFormatDate(time.data) }})
     </li>
   </ol>
