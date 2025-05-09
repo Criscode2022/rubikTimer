@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar, MatSnackBarRef } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { saveAs } from "file-saver";
@@ -7,6 +8,7 @@ import { SubsManagerDirective } from "../core/directives/subs-manager/subs-manag
 import { Results } from "../core/types/results";
 import { Time } from "../core/types/time";
 import { calculateAverage } from "../shared/utils/calculateAverage";
+import { ConfirmationDialogComponent } from "./components/confirmation-dialog/confirmation-dialog.component";
 
 @Component({
   selector: "app-times",
@@ -16,6 +18,8 @@ import { calculateAverage } from "../shared/utils/calculateAverage";
 export class TimesComponent extends SubsManagerDirective implements OnInit {
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
+
+  private dialog = inject(MatDialog);
 
   protected localData: Time[] = [];
 
@@ -61,31 +65,28 @@ export class TimesComponent extends SubsManagerDirective implements OnInit {
     saveAs(blob, "resultadosTodo.xlsx");
   }
 
-  protected clearLocalStorage(): void {
-    const confirmDelete = window.confirm(
-      "Seguro que queres eliminar todos os tempos gardados? Esta acción non pode ser revertida"
-    );
-
-    if (!confirmDelete) {
-      return;
-    }
-
-    localStorage.clear();
-    sessionStorage.clear();
-
-    let snackBarRef = this.openSnackBar("Datos eliminados correctamente", "OK");
-    this.subs.add(
-      snackBarRef.afterDismissed().subscribe(() => {
-        this.router.navigate(["/"]);
-      })
-    );
-
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
-  }
-
   private openSnackBar(message: string, action: string): MatSnackBarRef<any> {
     return this.snackBar.open(message, action, { duration: 5000 });
+  }
+
+  protected deleteData() {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: "300px",
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        localStorage.clear();
+        sessionStorage.clear();
+
+        this.openSnackBar("Datos eliminados correctamente", "OK");
+
+        this.getCubeResults(2);
+        this.getCubeResults(3);
+        this.getCubeResults(4);
+
+        this.router.navigate(["/"]);
+      }
+    });
   }
 }
